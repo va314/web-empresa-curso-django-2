@@ -28,14 +28,16 @@
   <body>
 
     <h1 class="site-heading text-center text-white d-none d-lg-block">
-      <span class="site-heading-upper text-primary mb-3">El autentico café de chipaquillo</span>
-      <span class="site-heading-lower">Coffe Sone</span>
+      <span class="site-heading-lower">COFFE SONE</span>
+      <br>
+      <br>
+      <span class="site-heading-upper">El autentico café de chipaquillo</span>
     </h1>
 
     <!-- Navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
       <div class="container">
-        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="{% url 'home' %}">La Caffettiera</a>
+        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="{% url 'home' %}">COFFE SONE</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -70,11 +72,11 @@
     <footer class="footer text-faded text-center py-5">
       <div class="container">
         <p class="m-0">
-          {% if Link_twitter %}
-          <a href="{{Link_twitter}}" class="link">
+          {% if Link_Whatsapp %}
+          <a href="{{Link_Whatsapp}}" class="link">
 	          <span class="fa-stack fa-lg">
 	            <i class="fa fa-circle fa-stack-2x"></i>
-	            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+	            <i class="fa fa-whatsapp fa-stack-1x fa-inverse"></i>
 	          </span>
 	        </a>
           {% endif %}
