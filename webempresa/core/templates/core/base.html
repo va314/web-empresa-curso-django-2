@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% block title %}{% endblock %} | Coffe Sone</title>
+    <title>{% block title %}{% endblock %} | I love Kaphíy</title>
 
     {% load static %}
 
@@ -28,16 +28,19 @@
   <body>
 
     <h1 class="site-heading text-center text-white d-none d-lg-block">
-      <span class="site-heading-lower">COFFE SONE</span>
-      <br>
-      <br>
-      <span class="site-heading-upper">El autentico café de chipaquillo</span>
+      <img src="{% static 'core/img/kaphiy.png' %}" alt="I Love Kaphíy" class="logo-img">
+       
+      <span class="site-heading-lower">I Love Kaphíy</span>
+      <span class="site-heading-upper">100% ecológico</span>
     </h1>
+
+    
 
     <!-- Navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
       <div class="container">
         <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="{% url 'home' %}">COFFE SONE</a>
+        
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -66,6 +69,8 @@
       </div>
     </nav>
 
+
+
     {% block content %} {% endblock %}
 
     <!-- Pié de página -->
@@ -80,6 +85,7 @@
 	          </span>
 	        </a>
           {% endif %}
+      
 	        {% if Link_facebook %}
           <a href="{{Link_facebook}}" class="link">
 	          <span class="fa-stack fa-lg">
@@ -122,4 +128,5 @@
 
   </body>
 
+  
 </html>
