@@ -1,0 +1,11 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Pago Exitoso{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+  <h2 class="text-success">¡Gracias por tu compra!</h2>
+  <p>Tu pago ha sido recibido. Pronto nos pondremos en contacto contigo.</p>
+  <a href="{% url 'services' %}" class="btn btn-primary">Volver a la tienda</a>
+</div>
+{% endblock %}
