@@ -17,4 +17,5 @@ urlpatterns = [
     path('payment/failed/', payment_failed, name='payment_failed'),
     path('cart/remove/<int:service_id>/', remove_from_cart, name='remove_from_cart'),
     path('cart/clear/', clear_cart, name='clear_cart'),
+    path("cart/update/<int:service_id>/<str:action>/", update_cart, name="update_cart"),
 ]

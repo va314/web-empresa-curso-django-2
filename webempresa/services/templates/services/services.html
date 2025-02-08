@@ -5,22 +5,20 @@
 {% block title %}Tienda{% endblock %}
 
 {% block content %}
-<br>
+
 <div class="container">
     <br>
     <br>
     <div id="cart-message" class="alert alert-success text-center" style="display: none;"></div>
-
     <div class="row justify-content-center">
         {% for service in services %}
-            <div class="col-md-4 col-sm-6 d-flex align-items-stretch">
+        <div class="col-md-4 col-sm-6 d-flex align-items-stretch mb-4">
                 <div class="product-item text-center">
                     <h2>{{ service.subtitle }}</h2>
                     <h3>{{ service.title }}</h3>
                     <img class="img-fluid rounded" src="{{ service.image.url }}" alt="Imagen del servicio">
                     <p>{{ service.content|truncatewords:15 }}</p>
                     <h3>S/. {{ service.price }}</h3>
-
                     <!-- Loader individual por producto -->
                     <div id="loading-spinner-{{ service.id }}" style="display: none; text-align: center;">
                         <img src="{% static 'core/img/loading.gif' %}" alt="Cargando..." width="50">
@@ -30,13 +28,14 @@
                     <button class="btn btn-primary add-to-cart" data-id="{{ service.id }}">
                         🛒 Añadir al carrito
                     </button>
+
                 </div>
             </div>
         {% endfor %}
+        
     </div>
-</div>
-<br>
 
+</div>
 <!-- Script para añadir productos al carrito con AJAX -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -76,5 +75,6 @@
         });
     });
 </script>
+
 
 {% endblock %}

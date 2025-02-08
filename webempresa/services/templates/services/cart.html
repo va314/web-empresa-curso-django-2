@@ -184,13 +184,15 @@ document.getElementById("execute-payment").addEventListener("click", function ()
     .catch(error => console.error("Error:", error));
 });
 </script>
-<script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".update-quantity").forEach(button => {
         button.addEventListener("click", function () {
             let serviceId = this.getAttribute("data-id");
             let action = this.getAttribute("data-action");
-    
-            fetch(`/cart/update/${serviceId}/${action}/`, {
+
+            fetch(`/services/cart/update/${serviceId}/${action}/`, {  // Agregar "services" si la URL lo requiere
                 method: "POST",
                 headers: {
                     "X-CSRFToken": "{{ csrf_token }}",
@@ -198,14 +200,19 @@ document.getElementById("execute-payment").addEventListener("click", function ()
                 },
                 body: JSON.stringify({})
             })
-            .then(response => response.json())  // ✅ Asegura que la respuesta sea JSON
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     document.getElementById(`quantity-${serviceId}`).innerText = data.quantity;
-                    document.getElementById(`total-${serviceId}`).innerText = (data.quantity * data.unit_price).toFixed(2);
+                    document.getElementById(`total-${serviceId}`).innerText = data.total.toFixed(2);
                     document.getElementById("cart-total").innerText = data.cart_total.toFixed(2);
                 } else {
-                    alert("❌ " + data.message);
+                    alert("❌ Error al actualizar el carrito.");
                 }
             })
             .catch(error => {
@@ -214,7 +221,8 @@ document.getElementById("execute-payment").addEventListener("click", function ()
             });
         });
     });
-    </script>
+});
+</script> 
     
 
 {% endblock %}

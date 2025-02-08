@@ -421,15 +421,15 @@ ul.errorlist{
 /* Cambiar el color del texto a blanco para mayor contraste */
 .product-item {
   color: #fff; /* Texto en blanco */
-  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semi-transparente */
+  background-color: rgba(0, 0, 0, 0.452); /* Fondo oscuro semi-transparente */
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 1px;
   text-align: center;
 }
 
 /* Hacer que el título sea más visible */
 .product-item h2 {
-  color: #f8d210; /* Amarillo para destacar */
+  color: #fff; /* Amarillo para destacar */
   font-size: 20px;
   font-weight: bold;
 }
@@ -677,4 +677,22 @@ ul.errorlist{
 #payButton {
   font-size: 18px;
   padding: 10px 20px;
+}
+
+/* .product-item {
+  background: #807171;  /* Asegurar fondo blanco 
+  padding: 20px;  /* Espaciado interno 
+  border-radius: 10px;  /* Bordes redondeados 
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);  /* Sombra para destacar 
+  margin-bottom: 30px;  Espaciado entre elementos
+} */
+
+.product-item img { 
+  max-width: 100%;
+  height: auto;
+  border-radius: 0px;
+}
+
+.add-to-cart {
+  margin-top: 10px;  /* Espaciado superior del botón */
 }

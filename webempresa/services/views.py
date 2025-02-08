@@ -128,6 +128,7 @@ def process_card_payment(request):
     return JsonResponse({"success": False, "message": "Método no permitido."}, status=405)
 
 # ✅ Generar código QR para Yape, Plin y Agora
+
 def generate_qr(request, payment_method):
     try:
         cart = request.session.get('cart', {})
@@ -136,18 +137,19 @@ def generate_qr(request, payment_method):
         if total_price == 0:
             return HttpResponse("❌ No puedes generar un QR sin productos.", status=400)
 
-        receiver_number = "943981389"  # Número de prueba
+        receiver_number = "943981389"  # Número real del receptor en Yape/Plin
 
         qr_urls = {
-            "yape": f"https://api.yape.com/generate_qr?amount={total_price}&receiver={receiver_number}",
-            "plin": f"https://api.plin.com/generate_qr?amount={total_price}&receiver={receiver_number}",
-            "agora": f"https://www.agorapay.pe/pay/{total_price}/{receiver_number}"
+            "yape": f"yape://pay?amount={total_price:.2f}&receiver={receiver_number}",
+            "plin": f"plin://pay?amount={total_price:.2f}&receiver={receiver_number}",
+            "agora": f"https://www.agorapay.pe/pay/{total_price:.2f}/{receiver_number}"
         }
 
         qr_url = qr_urls.get(payment_method)
         if not qr_url:
             return HttpResponse("❌ Método de pago no válido", status=400)
 
+        # Generamos el código QR
         qr = qrcode.make(qr_url)
         buffer = BytesIO()
         qr.save(buffer, format="PNG")
@@ -196,7 +198,7 @@ def update_cart(request, service_id, action):
             if cart[str(service_id)]["quantity"] > 1:
                 cart[str(service_id)]["quantity"] -= 1
             else:
-                del cart[str(service_id)]  # ✅ Si la cantidad llega a 0, eliminar producto
+                del cart[str(service_id)]  # Eliminar si la cantidad es 0
 
         request.session['cart'] = cart
         request.session.modified = True
@@ -210,4 +212,4 @@ def update_cart(request, service_id, action):
             "cart_total": total_price
         })
 
-    return JsonResponse({"success": False, "message": "❌ Producto no encontrado en el carrito."})
+    return JsonResponse({"success": False, "message": "❌ Producto no encontrado."})
