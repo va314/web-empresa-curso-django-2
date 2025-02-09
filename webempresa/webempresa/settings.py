@@ -28,11 +28,13 @@ DEBUG = True
 
 # ALLOWED_HOSTS = ['18.222.120.232', 'ec2-18-222-120-232.compute-1.amazonaws.com']
 ALLOWED_HOSTS = [
-    '18.222.120.232',  # Tu IP pública de AWS
-    'ec2-18-222-120-232.compute-1.amazonaws.com',  # Tu hostname de AWS
-    'localhost', 
+    '18.222.120.232',  # Tu IP pública
+    '18.222.120.232:8000',  # También con el puerto si lo usas directamente
+    'ec2-18-222-120-232.compute-1.amazonaws.com',  # Hostname de AWS
+    'localhost',
     '127.0.0.1',
 ]
+
 
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', '']
