@@ -1,6 +1,7 @@
 Pillow
 Django
 django-ckeditor
+
 asgiref           
 certifi            
 cffi               
@@ -25,3 +26,4 @@ sqlparse
 typing_extensions  
 tzdata             
 urllib3            
+
