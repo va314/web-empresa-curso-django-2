@@ -1,6 +1,6 @@
 body {
-  font-family: 'Euphoria Script', cursive;
-  background: linear-gradient(rgba(47, 23, 15, 0.016), rgba(47, 23, 15, 0)), url("../img/bg.jpg");
+  font-family: 'Lora';
+  background: linear-gradient(rgba(47, 23, 15, 0.65), rgba(47, 23, 15, 0.65)), url("../img/bg.jpg");
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
@@ -12,7 +12,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Euphoria Script', cursive;
+  font-family: 'Raleway';
 }
 
 p {
@@ -28,7 +28,7 @@ p {
   margin-bottom: 5rem;
   text-transform: uppercase;
   line-height: 1;
-  font-family: 'Euphoria Script', cursive;
+  font-family: 'Raleway';
 }
 
 .site-heading .site-heading-upper {
@@ -80,8 +80,8 @@ p {
 }
 
 #mainNav {
-  background-color: rgba(47, 23, 15, 0.9);
-  font-family: 'Euphoria Script', cursive;
+  background-color: #000000;
+  font-family: 'Raleway';
 }
 
 #mainNav .navbar-brand {
@@ -92,6 +92,54 @@ p {
   color: rgba(255, 255, 255, 0.7);
   font-weight: 800;
 }
+/* Estilo base de la navbar (más delgada por defecto) */
+.navbar {
+  height: 50px; /* Navbar delgada por defecto */
+  padding: 5px 0;
+  transition: height 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+}
+
+/* Expande la navbar al pasar el mouse */
+.navbar:hover {
+  height: 80px; /* Expande la altura */
+  background-color: rgba(0, 0, 0, 1); /* Hace el fondo completamente negro */
+}
+
+/* Ajustes en los enlaces para que no se oculten */
+.navbar-nav .nav-link {
+  font-size: 14px;
+  padding: 5px 10px;
+  transition: font-size 0.3s ease-in-out;
+}
+/* Estilos para la opción activa en el menú */
+/* Cambiar el color de la opción activa en el menú */
+.navbar-nav .active a {
+  color: #ff9800 !important; /* Naranja para destacar */
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+
+
+/* Aumenta ligeramente el tamaño de los enlaces cuando la navbar se expande */
+.navbar:hover .nav-link {
+  font-size: 16px;
+}
+
+/* Ajuste del logo */
+.logo-img {
+  width: 40px;
+  height: 40px;
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+/* Aumenta el logo cuando la navbar se expande */
+.navbar:hover .logo-img {
+  width: 60px;
+  height: 60px;
+}
+
 
 #mainNav .navbar-nav .nav-item.active .nav-link {
   color: #e6a756;
@@ -150,7 +198,7 @@ p {
 .cta {
   padding-top: 5rem;
   padding-bottom: 5rem;
-  background-color: rgba(96, 230, 86, 0.9);
+  background-color: rgba(230, 167, 86, 0.9);
 }
 
 .cta .cta-inner {
@@ -237,7 +285,7 @@ p {
 }
 
 .footer {
-  background-color: rgba(47, 23, 15, 0.9);
+  background-color: #000000;
 }
 
 .text-primary {
@@ -249,7 +297,7 @@ p {
 }
 
 .btn {
-  box-shadow: 0px 3px 3px 0px rgba(33, 37, 41, 0.1);
+  box-shadow: 0px 3px 3px 0px #000000;
 }
 
 .btn-primary {
@@ -298,4 +346,353 @@ ul.errorlist{
   padding-top: .75rem;
   font-style: italic;
   color: red;
+}
+
+.whatsapp-button {
+  position: fixed; /* Siempre fijo en la pantalla */
+  bottom: 20px; /* Posición desde la parte inferior */
+  right: 20px; /* Posición desde la parte derecha */
+  z-index: 1000; /* Se mantiene sobre otros elementos */
+}
+
+.whatsapp-button img {
+  width: 60px; /* Tamaño del botón */
+  height: 60px;
+  border-radius: 50%; /* Lo hace circular */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para resaltarlo */
+  transition: transform 0.3s ease-in-out;
+}
+
+.whatsapp-button img:hover {
+  transform: scale(1.1); /* Efecto al pasar el cursor */
+}
+
+
+.logo-img {
+  max-height: 100px; /* Asegura que el logo sea visible */
+  width: auto; /* Mantiene la proporción */
+  display: block;
+  border-radius: 100%; /
+  margin: 0 auto; /* Centra el logo */
+  position: relative;
+  z-index: 10;
+}
+
+.blog-container {
+  display: flex;
+  flex-wrap: nowrap; /* Evita que los posts se vayan a la siguiente línea */
+  overflow-x: auto; /* Permite hacer scroll horizontal si hay muchos posts */
+  gap: 20px; /* Espaciado entre los posts */
+  padding-bottom: 10px;
+  scroll-behavior: smooth; /* Hace el desplazamiento más suave */
+}
+
+.blog-post {
+  flex: 0 0 300px; /* Cada post tendrá un ancho fijo */
+  max-width: 300px;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 15px;
+}
+
+.blog-post img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.blog-post h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.blog-post p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Para ocultar la barra de desplazamiento en navegadores modernos */
+.blog-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Cambiar el color del texto a blanco para mayor contraste */
+.product-item {
+  color: #fff; /* Texto en blanco */
+  background-color: rgba(0, 0, 0, 0.452); /* Fondo oscuro semi-transparente */
+  padding: 15px;
+  border-radius: 1px;
+  text-align: center;
+}
+
+/* Hacer que el título sea más visible */
+.product-item h2 {
+  color: #fff; /* Amarillo para destacar */
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Mejorar la visibilidad del precio */
+.product-item h3 {
+  color: #28a745; /* Verde brillante */
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* Mejorar la visibilidad de la descripción */
+.product-item p {
+  color: #fff;
+  font-size: 16px;
+}
+
+/* Botón de carrito más visible */
+.btn-primary {
+  background-color: #ff9800;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  transition: background 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #e68900;
+}
+
+/* Mejorar la visibilidad del botón "Ver Carrito" */
+.btn-warning {
+  background-color: #fbc02d;
+  color: black;
+  font-weight: bold;
+}
+
+.btn-warning:hover {
+  background-color: #f9a825;
+}
+/* Estilizar la tabla del carrito */
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para mejorar visibilidad */
+  color: #000; /* Texto negro para contraste */
+  font-size: 18px;
+}
+
+/* Encabezados de la tabla */
+.cart-table th {
+  background: #333;
+  color: #fff;
+  padding: 12px;
+  text-align: center;
+}
+
+/* Celdas de la tabla */
+.cart-table td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Botones de acción en el carrito */
+.btn-danger {
+  background: #dc3545;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-danger:hover {
+  background: #c82333;
+}
+
+/* Estilizar los botones de acción */
+.cart-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* Botón de Pagar */
+.btn-pay {
+  background: #28a745;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-pay:hover {
+  background: #218838;
+}
+
+/* Hacer que las imágenes no se deformen */
+/* Ajustar tamaño de imágenes en la tabla del carrito */
+.cart-table img {
+  width: 80px;  /* Tamaño fijo para evitar que sean grandes */
+  height: 80px; /* Mantener proporción */
+  object-fit: cover; /* Ajusta la imagen sin deformarla */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+/* Estilos generales para la tabla del carrito */
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  font-size: 16px;
+}
+
+/* Encabezados de la tabla */
+.cart-table th {
+  background: #333;
+  color: #fff;
+  padding: 12px;
+  text-align: center;
+}
+
+/* Celdas de la tabla */
+.cart-table td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Estilo para el contenedor del carrito */
+.dropdown-cart {
+  width: 250px;
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  display: none;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Mostrar el carrito cuando el usuario pase el mouse */
+.nav-item.dropdown:hover .dropdown-cart {
+  display: block;
+}
+
+/* Estilo para los productos dentro del carrito */
+.cart-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 5px;
+}
+
+.cart-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+/* Estilo del botón del carrito */
+.cart-footer {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.cart-footer .btn {
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------- */
+/* /* Fondo personalizado */
+.container {
+  /* background: linear-gradient(135deg, #2a2a2a, #3d3d3d); */
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Estilo general de la tabla */
+.custom-table {
+  background: #f8f9fa;
+  color: #000;
+}
+
+/* Ocultar bordes de la tabla */
+.custom-table th, 
+.custom-table td {
+  border: none !important;
+}
+
+/* Filas con fondo transparente y espaciado */
+.table-row {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: background 0.3s ease-in-out;
+}
+
+/* Cambiar fondo al pasar el mouse */
+.table-row:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Botones de cantidad */
+.update-quantity {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* Imagen de los productos */
+.img-thumbnail {
+  border: 2px solid #ddd;
+  transition: transform 0.3s ease-in-out;
+  background-color: #ffffff;
+}
+
+.img-thumbnail:hover {
+  transform: scale(1.1);
+}
+
+/* Botón de eliminar */
+.btn-danger {
+  transition: background 0.3s ease-in-out;
+}
+
+.btn-danger:hover {
+  background: #ff5a5a;
+}
+
+/* Botón de pago */
+#payButton {
+  font-size: 18px;
+  padding: 10px 20px;
+}
+
+/* .product-item {
+  background: #807171;  /* Asegurar fondo blanco 
+  padding: 20px;  /* Espaciado interno 
+  border-radius: 10px;  /* Bordes redondeados 
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);  /* Sombra para destacar 
+  margin-bottom: 30px;  Espaciado entre elementos
+} */
+
+.product-item img { 
+  max-width: 100%;
+  height: auto;
+  border-radius: 0px;
+}
+
+.add-to-cart {
+  margin-top: 10px;  /* Espaciado superior del botón */
 }

@@ -1,0 +1,11 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Pago Cancelado{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+  <h2 class="text-danger">Pago Cancelado</h2>
+  <p>Parece que cancelaste la compra. Si necesitas ayuda, contáctanos.</p>
+  <a href="{% url 'services' %}" class="btn btn-primary">Volver a la tienda</a>
+</div>
+{% endblock %}

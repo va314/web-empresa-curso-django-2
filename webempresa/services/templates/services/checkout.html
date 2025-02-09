@@ -1,0 +1,142 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Finalizar Compra{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+    <h2>Finalizar Compra</h2>
+    <p>Total a pagar: <strong>S/. {{ total_price }}</strong></p>
+
+    <!-- Botón de Pago (reemplaza al de "Seleccionar Método de Pago") -->
+    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#paymentModal">
+        💰 Pagar
+    </button>
+</div>
+
+<!-- Modal Principal de Métodos de Pago -->
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Elige tu Método de Pago</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <!-- PAGO CON TARJETA DE CRÉDITO -->
+                <h4 class="mb-3">Pago con Tarjeta de Crédito/Débito</h4>
+                <button type="button" class="btn btn-primary" id="open-card-form-modal">
+                    💳 Pagar con Tarjeta
+                </button>
+
+                <hr>
+
+                <!-- PAGO CON PAYPAL -->
+                <h4 class="mt-4">Pago con PayPal</h4>
+                <a href="{% url 'checkout' %}" class="btn btn-primary" id="paypal-button">
+                    💳 Pagar con PayPal
+                </a>
+
+                <hr>
+
+                <!-- PAGO CON CÓDIGOS QR -->
+                <h4 class="mt-4">O escanea un código QR:</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>Pago con Yape</h5>
+                        <img src="{% url 'generate_qr' 'yape' %}" alt="Pagar con Yape" class="img-fluid border">
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Pago con Plin</h5>
+                        <img src="{% url 'generate_qr' 'plin' %}" alt="Pagar con Plin" class="img-fluid border">
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Pago con Agora</h5>
+                        <img src="{% url 'generate_qr' 'agora' %}" alt="Pagar con Agora" class="img-fluid border">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Pequeño para Formulario de Tarjeta -->
+<div class="modal fade" id="cardFormModal" tabindex="-1" role="dialog" aria-labelledby="cardFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cardFormModalLabel">Ingresa los Datos de tu Tarjeta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="card-payment-form">
+                    <div class="form-group">
+                        <label for="card-number">Número de Tarjeta</label>
+                        <input type="text" class="form-control" id="card-number" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="expiry-date">Fecha de Vencimiento</label>
+                            <input type="text" class="form-control" id="expiry-date" placeholder="MM/AA" required>
+                        </div>
+                        <div class="col">
+                            <label for="cvv">Código CVV</label>
+                            <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardholder-name">Nombre del Titular</label>
+                        <input type="text" class="form-control" id="cardholder-name" placeholder="Nombre Completo" required>
+                    </div>
+                    <button type="button" class="btn btn-primary mt-3" id="execute-payment">
+                        ✅ Ejecutar Pago
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts necesarios para Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- Script para manejar los modales y el pago -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Cierra el modal principal antes de abrir el de tarjeta
+    document.getElementById("open-card-form-modal").addEventListener("click", function () {
+        $("#paymentModal").modal("hide");
+        $("#cardFormModal").modal("show");
+    });
+
+    // Cierra el modal principal antes de redirigir a PayPal
+    document.getElementById("paypal-button").addEventListener("click", function () {
+        $("#paymentModal").modal("hide");
+    });
+
+    // Validar el formulario de tarjeta y procesar pago
+    document.getElementById("execute-payment").addEventListener("click", function () {
+        let cardNumber = document.getElementById("card-number").value;
+        let expiryDate = document.getElementById("expiry-date").value;
+        let cvv = document.getElementById("cvv").value;
+        let cardholderName = document.getElementById("cardholder-name").value;
+
+        if (!cardNumber || !expiryDate || !cvv || !cardholderName) {
+            alert("❌ Por favor, completa todos los campos.");
+            return;
+        }
+
+        alert("✅ Pago procesado correctamente con la tarjeta de " + cardholderName);
+        $("#cardFormModal").modal("hide");
+    });
+});
+</script>
+
+{% endblock %}

@@ -2,33 +2,79 @@
 
 {% load static %}
 
-{% block title %}Servicios{% endblock %}
+{% block title %}Tienda{% endblock %}
 
 {% block content %}
 
-{% for service in services reversed %}
-<section class="page-section">
-  <div class="container">
-    <div class="product-item">
-      <div class="product-item-title d-flex">
-        <div class="bg-faded p-5 d-flex mr-auto rounded">
-          <h2 class="section-heading mb-0">
-            <span class="section-heading-upper">{{service.subtitle}}</span>
-            <span class="section-heading-lower">{{service.title}}</span>
-          </h2>
-        </div>
-      </div>
-      <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{{service.image.url}}" alt="">
-      <div class="product-item-description d-flex ml-auto">
-        <div class="bg-faded p-5 rounded">
-          <p class="mb-0">{{service.content}}</p>
-        </div>
-      </div>
+<div class="container">
+    <br>
+    <br>
+    <div id="cart-message" class="alert alert-success text-center" style="display: none;"></div>
+    <div class="row justify-content-center">
+        {% for service in services %}
+        <div class="col-md-4 col-sm-6 d-flex align-items-stretch mb-4">
+                <div class="product-item text-center">
+                    <h2>{{ service.subtitle }}</h2>
+                    <h3>{{ service.title }}</h3>
+                    <img class="img-fluid rounded" src="{{ service.image.url }}" alt="Imagen del servicio">
+                    <p>{{ service.content|truncatewords:15 }}</p>
+                    <h3>S/. {{ service.price }}</h3>
+                    <!-- Loader individual por producto -->
+                    <div id="loading-spinner-{{ service.id }}" style="display: none; text-align: center;">
+                        <img src="{% static 'core/img/loading.gif' %}" alt="Cargando..." width="50">
+                    </div>
+
+                    <!-- Botón con AJAX -->
+                    <button class="btn btn-primary add-to-cart" data-id="{{ service.id }}">
+                        🛒 Añadir al carrito
+                    </button>
+
+                </div>
+            </div>
+        {% endfor %}
+        
     </div>
-  </div>
-</section>
-{% endfor %}
-  
+
+</div>
+<!-- Script para añadir productos al carrito con AJAX -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".add-to-cart").forEach(button => {
+            button.addEventListener("click", function () {
+                let serviceId = this.getAttribute("data-id");
+                let cartMessage = document.getElementById("cart-message");
+                let loadingSpinner = document.getElementById(`loading-spinner-${serviceId}`);
+
+                cartMessage.style.display = "none";
+                loadingSpinner.style.display = "block";  // Muestra el loader solo para este producto
+
+                fetch("{% url 'add_to_cart' 0 %}".replace('0', serviceId), {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        cartMessage.innerText = "✅ " + data.message;
+                    } else {
+                        cartMessage.innerText = "❌ " + data.message;
+                    }
+                    cartMessage.style.display = "block";
+                    loadingSpinner.style.display = "none";  // Oculta el loader después de recibir la respuesta
+                    setTimeout(() => cartMessage.style.display = "none", 3000);
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    loadingSpinner.style.display = "none";  // Oculta el loader si hay un error
+                });
+            });
+        });
+    });
+</script>
 
 
 {% endblock %}

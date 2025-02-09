@@ -1,0 +1,228 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Carrito de Compras{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <br>
+    <br>
+    <h2 class="text-center text-white">🛒 Procesar Pagos</h2>
+
+    {% if cart %}
+        <div class="table-responsive">
+            <table class="table text-center align-middle custom-table">
+                <thead>
+                    <tr class="bg-dark text-white">
+                        <th>Producto</th>
+                        <th>Imagen</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, item in cart.items %}
+                    <tr class="table-row">
+                        <td class="align-middle font-weight-bold text-uppercase">{{ item.title }}</td>
+                        <td class="align-middle">
+                            <img src="{{ item.image }}" alt="Imagen del producto" class="shadow-sm " width="90">
+                        </td>
+                        <td class="align-middle">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <button class="btn btn-sm btn-outline-danger update-quantity rounded-circle" data-id="{{ key }}" data-action="decrease">−</button>
+                                <span id="quantity-{{ key }}" class="mx-2 px-3 py-1 rounded">{{ item.quantity }}</span>
+                                <button class="btn btn-sm btn-outline-success update-quantity rounded-circle" data-id="{{ key }}" data-action="increase">+</button>
+                            </div>
+                        </td>
+                        <td class="align-middle font-weight-bold text-primary">S/. {{ item.price }}</td>
+                        <!-- <td class="align-middle font-weight-bold text-success">S/. <span id="total-{{ key }}">{{ item.quantity|floatformat:2 }}</span></td> -->
+                        <td class="align-middle font-weight-bold text-success">
+                            <span id="total-{{ key }}">{{ item.quantity|floatformat:0|add:0|floatformat:2 }}</span>
+                        </td>
+                        
+                         
+                        <td class="align-middle">
+                            <a href="{% url 'remove_from_cart' key %}" class="btn btn-danger btn-sm px-3 shadow-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h4 class="text-right mt-3 text-white">Total a Pagar: <strong class="text-warning">S/. <span id="cart-total">{{ total_price|floatformat:2 }}</span></strong></h4>
+
+        <div class="text-center mt-3">
+            <a href="{% url 'clear_cart' %}" class="btn btn-danger btn-lg shadow-sm">🗑 Vaciar Carrito</a>
+            <a href="{% url 'services' %}" class="btn btn-secondary btn-lg shadow-sm">🛍 Seguir Comprando</a>
+            <button id="payButton" class="btn btn-success btn-lg shadow-sm" data-toggle="modal" data-target="#paymentModal">
+                💰 Pagar
+            </button>
+        </div>
+    {% else %}
+        <p class="text-center mt-4 text-white">🛒 Ve a la opcion TIENDA y haga su pedido.</p>
+        <div class="text-center">
+            <a href="{% url 'services' %}" class="btn btn-primary">Selecciona su pedido</a>
+        </div>
+    {% endif %}
+</div>
+
+        
+<!-- 🔹 MODAL - Métodos de Pago -->
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">💳 Elige tu Método de Pago</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <h4 class="mb-3">💳 Pago con Tarjeta</h4>
+                <button type="button" class="btn btn-primary" id="openCardForm">
+                    <img src="{% static 'core/img/card_icon.png' %}" width="20"> Pagar con Tarjeta
+                </button>
+
+                <hr>
+
+                <h4 class="mt-4">💸 Pago con PayPal</h4>
+                <button id="paypalPayment" class="btn btn-primary">
+                    <img src="{% static 'core/img/paypal_icon.png' %}" width="20"> Pagar con PayPal
+                </button>
+
+                <hr>
+
+                <h4 class="mt-4">📲 Pago con Código QR</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>📱 Yape</h5>
+                        <img src="{% url 'generate_qr' 'yape' %}" alt="Pagar con Yape" class="img-fluid border">
+                    </div>
+                    <div class="col-md-4">
+                        <h5>📱 Plin</h5>
+                        <img src="{% url 'generate_qr' 'plin' %}" alt="Pagar con Plin" class="img-fluid border">
+                    </div>
+                    <div class="col-md-4">
+                        <h5>💼 Agora</h5>
+                        <img src="{% url 'generate_qr' 'agora' %}" alt="Pagar con Agora" class="img-fluid border">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 🔹 MODAL - Formulario de Pago con Tarjeta -->
+<div class="modal fade" id="cardFormModal" tabindex="-1" role="dialog" aria-labelledby="cardFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">💳 Ingresa los Datos de tu Tarjeta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="card-payment-form">
+                    <div class="form-group">
+                        <label for="card-number">Número de Tarjeta</label>
+                        <input type="text" class="form-control" id="card-number" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="expiry-date">Fecha de Vencimiento</label>
+                            <input type="text" class="form-control" id="expiry-date" placeholder="MM/AA" required>
+                        </div>
+                        <div class="col">
+                            <label for="cvv">Código CVV</label>
+                            <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardholder-name">Nombre del Titular</label>
+                        <input type="text" class="form-control" id="cardholder-name" placeholder="Nombre Completo" required>
+                    </div>
+                    <button type="button" class="btn btn-primary mt-3" id="execute-payment">
+                        ✅ Ejecutar Pago
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 🔹 SCRIPT - Manejo de Pagos -->
+<script>
+document.getElementById("openCardForm").addEventListener("click", function () {
+    $("#cardFormModal").modal("show");
+});
+
+document.getElementById("execute-payment").addEventListener("click", function () {
+    let cardNumber = document.getElementById("card-number").value;
+    let expiryDate = document.getElementById("expiry-date").value;
+    let cvv = document.getElementById("cvv").value;
+    let name = document.getElementById("cardholder-name").value;
+
+    fetch("{% url 'process_card_payment' %}", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ card_number: cardNumber, expiry_date: expiryDate, cvv: cvv, name: name })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        if (data.success) {
+            window.location.href = "{% url 'payment_success' %}";
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});
+</script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".update-quantity").forEach(button => {
+        button.addEventListener("click", function () {
+            let serviceId = this.getAttribute("data-id");
+            let action = this.getAttribute("data-action");
+
+            fetch(`/services/cart/update/${serviceId}/${action}/`, {  // Agregar "services" si la URL lo requiere
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`quantity-${serviceId}`).innerText = data.quantity;
+                    document.getElementById(`total-${serviceId}`).innerText = data.total.toFixed(2);
+                    document.getElementById("cart-total").innerText = data.cart_total.toFixed(2);
+                } else {
+                    alert("❌ Error al actualizar el carrito.");
+                }
+            })
+            .catch(error => {
+                console.error("Error en la actualización:", error);
+                alert("❌ Error al actualizar el carrito.");
+            });
+        });
+    });
+});
+</script> 
+    
+
+{% endblock %}

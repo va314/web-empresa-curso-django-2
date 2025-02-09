@@ -125,10 +125,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Archivos estáticos adicionales
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # media config
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Configurar la URL de inicio de sesión
+LOGIN_URL = '/login/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -148,7 +156,24 @@ CKEDITOR_CONFIGS = {
 }
 
 # Email config 
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = '006cad2f5a4cea'
-EMAIL_HOST_PASSWORD = '79f6b00b7109f0'
-EMAIL_PORT = '2525' 
+# EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+# EMAIL_HOST_USER = '006cad2f5a4cea'
+# EMAIL_HOST_PASSWORD = '79f6b00b7109f0'
+# EMAIL_PORT = '2525' 
+# Configuración de correo SMTP en Django
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ilovekaphiy@gmail.com'  # Reemplázalo con tu email
+EMAIL_HOST_PASSWORD = 'rvbk uqle meca wwbr'  # Reemplázalo con tu contraseña
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Credenciales de PayPal
+PAYPAL_CLIENT_ID = "Af0JRUgfyhzUjgYOBH23VvPhFTIXhymEDS7Ly26xXgObKD8z2WpLneg-MKAYfK4I2tG-AJGOx9pXeo1T"
+PAYPAL_SECRET = "EIhxAzofoO86QZbRUNeLkprLSHIKQZpO2vw7d68k2CjOwp4KSDZq3737HN6PZGp9TTetcrhOhmiSMe41"
+PAYPAL_MODE = "sandbox"  # Cambia a 'live' para producción
+
+# MERCADO_PAGO_PUBLIC_KEY = "TU_PUBLIC_KEY"
+# MERCADO_PAGO_ACCESS_TOKEN = "TU_ACCESS_TOKEN"
+

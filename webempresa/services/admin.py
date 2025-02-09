@@ -1,8 +1,9 @@
 from django.contrib import admin
 from .models import Service
 
-# Register your models here.
 class ServiceAdmin(admin.ModelAdmin):
-    read_only_fields = ('created', 'updated')
+    list_display = ('title', 'price', 'available', 'created')
+    list_editable = ('price', 'available')
+    readonly_fields = ('created', 'updated')
 
 admin.site.register(Service, ServiceAdmin)
